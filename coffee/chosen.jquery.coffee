@@ -72,24 +72,25 @@ class Chosen extends AbstractChosen
     @form_field_jq.trigger("liszt:ready", {chosen: this})
 
   register_observers: ->
-    @container.mousedown (evt) => this.container_mousedown(evt)
-    @container.mouseup (evt) => this.container_mouseup(evt)
-    @container.mouseenter (evt) => this.mouse_enter(evt)
-    @container.mouseleave (evt) => this.mouse_leave(evt)
+    @container.mousedown @container_mousedown
+    @container.mouseup @container_mouseup
+    @container.mouseenter @mouse_enter
+    @container.mouseleave @mouse_leave
   
-    @search_results.mouseup (evt) => this.search_results_mouseup(evt)
-    @search_results.mouseover (evt) => this.search_results_mouseover(evt)
-    @search_results.mouseout (evt) => this.search_results_mouseout(evt)
+    @search_results.mouseup @search_results_mouseup
+    @search_results.mouseover @search_results_mouseover
+    @search_results.mouseout @search_results_mouseout
 
-    @form_field_jq.bind "liszt:updated", (evt) => this.results_update_field(evt)
+    @form_field_jq.bind "liszt:updated", @results_update_field
+    @form_field_jq.bind "change", @results_update_chosen
 
-    @search_field.blur (evt) => this.input_blur(evt)
-    @search_field.keyup (evt) => this.keyup_checker(evt)
-    @search_field.keydown (evt) => this.keydown_checker(evt)
+    @search_field.blur @input_blur
+    @search_field.keyup @keyup_checker
+    @search_field.keydown @keydown_checker
 
     if @is_multiple
-      @search_choices.click (evt) => this.choices_click(evt)
-      @search_field.focus (evt) => this.input_focus(evt)
+      @search_choices.click @choices_click
+      @search_field.focus @input_focus
     else
       @container.click (evt) => evt.preventDefault() # gobble click of anchor
 
@@ -317,7 +318,7 @@ class Chosen extends AbstractChosen
     @selected_item.find("span").text @default_text
     this.show_search_field_default()
     $(evt.target).remove();
-    @form_field_jq.trigger "change"
+    @form_field_jq.trigger "change.liszt"
     this.results_hide() if @active_field
 
   result_select: (evt) ->
@@ -351,7 +352,7 @@ class Chosen extends AbstractChosen
 
       @search_field.val ""
 
-      @form_field_jq.trigger "change"
+      @form_field_jq.trigger "change.liszt"
       this.search_field_scale()
 
   result_activate: (el) ->
@@ -371,7 +372,7 @@ class Chosen extends AbstractChosen
     this.result_clear_highlight()
     this.winnow_results()
 
-    @form_field_jq.trigger "change"
+    @form_field_jq.trigger "change.liszt"
     this.search_field_scale()
 
   single_deselect_control_build: ->

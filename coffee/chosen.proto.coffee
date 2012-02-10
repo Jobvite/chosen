@@ -65,24 +65,25 @@ class Chosen extends AbstractChosen
     @form_field.fire("liszt:ready", {chosen: this})
 
   register_observers: ->
-    @container.observe "mousedown", (evt) => this.container_mousedown(evt)
-    @container.observe "mouseup", (evt) => this.container_mouseup(evt)
-    @container.observe "mouseenter", (evt) => this.mouse_enter(evt)
-    @container.observe "mouseleave", (evt) => this.mouse_leave(evt)
+    @container.observe "mousedown", @container_mousedown
+    @container.observe "mouseup", @container_mouseup
+    @container.observe "mouseenter", @mouse_enter
+    @container.observe "mouseleave", @mouse_leave
     
-    @search_results.observe "mouseup", (evt) => this.search_results_mouseup(evt)
-    @search_results.observe "mouseover", (evt) => this.search_results_mouseover(evt)
-    @search_results.observe "mouseout", (evt) => this.search_results_mouseout(evt)
+    @search_results.observe "mouseup", @search_results_mouseup
+    @search_results.observe "mouseover", @search_results_mouseover
+    @search_results.observe "mouseout", @search_results_mouseout
     
-    @form_field.observe "liszt:updated", (evt) => this.results_update_field(evt)
+    @form_field.observe "liszt:updated", @results_update_field
+    @form_field.observe "liszt:updated", @results_update_chosen
 
-    @search_field.observe "blur", (evt) => this.input_blur(evt)
-    @search_field.observe "keyup", (evt) => this.keyup_checker(evt)
-    @search_field.observe "keydown", (evt) => this.keydown_checker(evt)
+    @search_field.observe "blur", @input_blur
+    @search_field.observe "keyup", @keyup_checker
+    @search_field.observe "keydown", @keydown_checker
 
     if @is_multiple
-      @search_choices.observe "click", (evt) => this.choices_click(evt)
-      @search_field.observe "focus", (evt) => this.input_focus(evt)
+      @search_choices.observe "click", @choices_click
+      @search_field.observe "focus", @input_focus
     else
       @container.observe "click", (evt) => evt.preventDefault() # gobble click of anchor
 

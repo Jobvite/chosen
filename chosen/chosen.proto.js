@@ -338,46 +338,21 @@ Copyright (c) 2011 by Harvest
 
     Chosen.prototype.register_observers = function() {
       var _this = this;
-      this.container.observe("mousedown", function(evt) {
-        return _this.container_mousedown(evt);
-      });
-      this.container.observe("mouseup", function(evt) {
-        return _this.container_mouseup(evt);
-      });
-      this.container.observe("mouseenter", function(evt) {
-        return _this.mouse_enter(evt);
-      });
-      this.container.observe("mouseleave", function(evt) {
-        return _this.mouse_leave(evt);
-      });
-      this.search_results.observe("mouseup", function(evt) {
-        return _this.search_results_mouseup(evt);
-      });
-      this.search_results.observe("mouseover", function(evt) {
-        return _this.search_results_mouseover(evt);
-      });
-      this.search_results.observe("mouseout", function(evt) {
-        return _this.search_results_mouseout(evt);
-      });
-      this.form_field.observe("liszt:updated", function(evt) {
-        return _this.results_update_field(evt);
-      });
-      this.search_field.observe("blur", function(evt) {
-        return _this.input_blur(evt);
-      });
-      this.search_field.observe("keyup", function(evt) {
-        return _this.keyup_checker(evt);
-      });
-      this.search_field.observe("keydown", function(evt) {
-        return _this.keydown_checker(evt);
-      });
+      this.container.observe("mousedown", this.container_mousedown);
+      this.container.observe("mouseup", this.container_mouseup);
+      this.container.observe("mouseenter", this.mouse_enter);
+      this.container.observe("mouseleave", this.mouse_leave);
+      this.search_results.observe("mouseup", this.search_results_mouseup);
+      this.search_results.observe("mouseover", this.search_results_mouseover);
+      this.search_results.observe("mouseout", this.search_results_mouseout);
+      this.form_field.observe("liszt:updated", this.results_update_field);
+      this.form_field.observe("liszt:updated", this.results_update_chosen);
+      this.search_field.observe("blur", this.input_blur);
+      this.search_field.observe("keyup", this.keyup_checker);
+      this.search_field.observe("keydown", this.keydown_checker);
       if (this.is_multiple) {
-        this.search_choices.observe("click", function(evt) {
-          return _this.choices_click(evt);
-        });
-        return this.search_field.observe("focus", function(evt) {
-          return _this.input_focus(evt);
-        });
+        this.search_choices.observe("click", this.choices_click);
+        return this.search_field.observe("focus", this.input_focus);
       } else {
         return this.container.observe("click", function(evt) {
           return evt.preventDefault();
